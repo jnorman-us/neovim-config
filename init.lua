@@ -15,6 +15,7 @@ vim.opt.expandtab = true
 vim.cmd.colorscheme('tokyonight')
 
 require('telescope').setup{}
+require('lualine').setup{}
 
 require('user.lsp')
 require('user.cmp')

@@ -17,4 +17,5 @@ return {
         },
     },
     {'nvim-telescope/telescope.nvim'},
+    {'nvim-lualine/lualine.nvim'},
 }
