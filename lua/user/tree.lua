@@ -16,9 +16,5 @@ end
 require('nvim-tree').setup{
     view = {
         width = 30,
-        float = {
-            enable = true,
-            open_win_config = centered_window(50, 50)
-        }
     },
 }

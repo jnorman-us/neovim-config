@@ -10,9 +10,9 @@ local lsp_attach = function(client, bufnr)
     vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
     vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
     vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-    vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-    vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-    vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+    vim.keymap.set('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+    vim.keymap.set({'n', 'x'}, 'gf', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+    vim.keymap.set('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
 
     vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
     vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
@@ -29,7 +29,22 @@ lsp_zero.extend_lspconfig({
 
 
 require('lspconfig').gopls.setup{capabilities = lsp_capabilities}
-require('lspconfig').rust_analyzer.setup{capabilities = lsp_capabilities}
+require('lspconfig').rust_analyzer.setup{
+    capabilities = lsp_capabilities,
+    checkOnSave = {
+        command = 'clippy',
+    },
+    assist = {
+        importMergeBehavior = 'last',
+        importPrefix = 'by_self',
+    },
+    cargo = {
+        allFeatures = true,
+    },
+    procMacro = {
+        enable = true,
+    },
+}
 
 require('nvim-treesitter.configs').setup{
     ensure_installed = { "go", "lua", "yaml", "helm", "rust" },
